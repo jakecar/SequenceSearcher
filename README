@@ -8,12 +8,14 @@ Searches for exact DNA sequence matches in a collection of proteins. Allows for 
 
 # Install
 
-- `. venv/bin/activate`
-- `pip install -r requirements.txt`
+- `virtualenv venv && . venv/bin/activate` # Make sure it's python3
+- `pip install -r requirements.txt` # mysqlclient only needed for production
 
 # Local development
 
 `cd src && env DEBUG=TRUE SECRET_KEY="secret" SQLALCHEMY_DATABASE_URI="sqlite:///:memory:" FLASK_APP=main.py flask run`
+
+Open http://127.0.0.1:5000/
 
 # About
 

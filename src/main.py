@@ -39,6 +39,7 @@ def align():
     query = request.form['query'].strip()
     query = ''.join(query.split())
     try:
+        if not query: raise KeyError
         seq_motif = motifs.create([Seq.Seq(query)])
     except KeyError:
         return Response("Invalid character(s) in sequence query", status=412)

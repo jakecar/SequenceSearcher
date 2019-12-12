@@ -3,6 +3,8 @@ import random, string, json, glob, os
 from Bio import AlignIO, motifs, Seq
 from flask_sqlalchemy import SQLAlchemy
 
+MAX_QUERY_SIZE = 500
+
 alignments = [AlignIO.read(f, 'gb') for f in glob.glob('proteins/*')]
 
 app = Flask(__name__)
@@ -18,7 +20,7 @@ class Alignment(db.Model):
     username = db.Column(db.String(10), unique=False, nullable=False, index=True)
     matched_protein = db.Column(db.String(20), unique=False, nullable=True)
     # Query from the user
-    alignment_query = db.Column(db.String(500), unique=False, nullable=False)
+    alignment_query = db.Column(db.String(MAX_QUERY_SIZE), unique=False, nullable=False)
     # Starting index of the match
     match_pos = db.Column(db.Integer, unique=False, nullable=True)
 
@@ -36,10 +38,16 @@ def index():
 def align():
     user = get_username()
     
-    query = request.form['query'].strip()
+    # Sanitize and validate input
+    query = request.form["query"].strip()
     query = ''.join(query.split())
+    if not query: 
+      return Response("Empty sequence query", status=412)
+
+    if len(query) > MAX_QUERY_SIZE: 
+      return Response("Query is longer than max query size of %d" % MAX_QUERY_SIZE, status=412)
+
     try:
-        if not query: raise KeyError
         seq_motif = motifs.create([Seq.Seq(query)])
     except KeyError:
         return Response("Invalid character(s) in sequence query", status=412)

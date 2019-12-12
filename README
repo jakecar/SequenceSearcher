@@ -9,11 +9,11 @@ Searches for exact DNA sequence matches in a collection of proteins. Allows for 
 # Install
 
 - `. venv/bin/activate`
-- `pip install -r ../requirements.txt`
+- `pip install -r requirements.txt`
 
 # Local development
 
-`env DEBUG=TRUE SECRET_KEY="secret" SQLALCHEMY_DATABASE_URI="sqlite:///:memory:" FLASK_APP=main.py flask run`
+`cd src && env DEBUG=TRUE SECRET_KEY="secret" SQLALCHEMY_DATABASE_URI="sqlite:///:memory:" FLASK_APP=main.py flask run`
 
 # About
 

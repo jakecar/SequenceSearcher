@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 alignments = [AlignIO.read(f, 'gb') for f in glob.glob('proteins/*')]
 
 app = Flask(__name__)
-for config_key in ['DEBUG', 'SECRET_KEY']:
+for config_key in ['DEBUG', 'SECRET_KEY', 'SQLALCHEMY_DATABASE_URI']:
   app.config[config_key] = os.environ.get(config_key)
 
 db = SQLAlchemy(app)
@@ -68,3 +68,6 @@ def get_username():
     if 'username' not in session:
         session['username'] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
     return session['username']
+
+if __name__ == "__main__":
+    app.run()

@@ -1,0 +1,20 @@
+Searches for exact DNA sequence matches in a collection of proteins. Allows for multiple concurrent requests.
+
+# Dependencies
+
+- Python 3
+- pip
+- virtualenv
+
+# Install
+
+- `. venv/bin/activate`
+- `pip install -r ../requirements.txt`
+
+# Local development
+
+`env DEBUG=TRUE SECRET_KEY="secret" SQLALCHEMY_DATABASE_URI="sqlite:///:memory:" FLASK_APP=main.py flask run`
+
+# About
+
+Has a limit of a 500 character sequence
